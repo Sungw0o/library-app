@@ -1,6 +1,16 @@
 package com.group.libraryapp.domain;
 
+import javax.persistence.*;
+
+@Entity
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id=  null;
+    @Column(nullable = false,length = 20) // name varchar(20) <- 필드명과 동일하기 때문에 생략 가능
+    private String name;
+    private Integer age;
+    protected User(){}
     public String getName() {
         return name;
     }
@@ -8,9 +18,6 @@ public class User {
     public Integer getAge() {
         return age;
     }
-
-    private String name;
-    private Integer age;
 
     public User(String name, Integer age) {
         if(name == null || name.isBlank()){
