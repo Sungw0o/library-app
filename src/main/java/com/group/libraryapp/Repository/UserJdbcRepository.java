@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class UserRepository {
+public class UserJdbcRepository {
     private final JdbcTemplate jdbcTemplate;
-    public UserRepository(JdbcTemplate jdbcTemplate) {
+    public  UserJdbcRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
     public boolean isUserNotExist(long id){
