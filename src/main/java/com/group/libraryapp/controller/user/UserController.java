@@ -1,6 +1,7 @@
 package com.group.libraryapp.controller.user;
 
 import com.group.libraryapp.Service.User.UserServiceV1;
+import com.group.libraryapp.Service.User.UserServiceV2;
 import com.group.libraryapp.Service.fruit.FruitService;
 import com.group.libraryapp.dto.response.UserResponse;
 import com.group.libraryapp.dto.user.request.UserCreateRequest;
@@ -12,33 +13,31 @@ import java.util.List;
 
 @RestController
 public class UserController {
-    private final UserServiceV1 userServiceV1;
-    private final FruitService fruitService;
-    public UserController(UserServiceV1 userServiceV1, @Qualifier("main") FruitService fruitService) {
-        this.userServiceV1 = userServiceV1;
-        this.fruitService = fruitService;
+    private final UserServiceV2 userServiceV2;
+    public UserController(UserServiceV2 userServiceV2) {
+        this.userServiceV2 = userServiceV2;
     }
 
 
     @PostMapping("/user") //POST /user
     public void saveUser(@RequestBody UserCreateRequest request){
-        userServiceV1.saveUser(request);
+        userServiceV2.saveUser(request);
     }
 
     @GetMapping("/user")
     public List<UserResponse> getUsers(){
-        return userServiceV1.getUsers();
+        return userServiceV2.getUsers();
 
     }
 
     @PutMapping("/user")
     public void updateUser(@RequestBody UserUpdateRequest request){
-        userServiceV1.updateUser(request);
+        userServiceV2.updateUser(request);
     }
 
     @DeleteMapping("/user")
     public void deleteUser(@RequestParam String name) {
-        userServiceV1.deleteUser(name);
+        userServiceV2.deleteUser(name);
     }
 
     @GetMapping("/user/error-test")

@@ -6,6 +6,7 @@ import com.group.libraryapp.dto.response.UserResponse;
 import com.group.libraryapp.dto.user.request.UserCreateRequest;
 import com.group.libraryapp.dto.user.request.UserUpdateRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,17 +20,32 @@ public class UserServiceV2 {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public void saveUser(UserCreateRequest request){
         userRepository.save(new User(request.getName(),request.getAge()));
     }
+
+
+    @Transactional(readOnly = true)
     public List<UserResponse> getUsers() {
         return userRepository.findAll().stream().map(UserResponse::new).collect(Collectors.toList());
     }
 
+    @Transactional
     public void updateUser(UserUpdateRequest request){
         User user = userRepository.findById(request.getId()).orElseThrow(IllegalAccessError::new);
         user.updateName(request.getName());
         userRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteUser(String name){
+        // select * from user where
+        User user = userRepository.findByName(name);
+        if(user == null){
+            throw new IllegalArgumentException();
+        }
+        userRepository.delete(user);
     }
 
 
