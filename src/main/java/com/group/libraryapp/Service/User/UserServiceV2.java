@@ -2,8 +2,13 @@ package com.group.libraryapp.Service.User;
 
 import com.group.libraryapp.domain.User;
 import com.group.libraryapp.domain.UserRepository;
+import com.group.libraryapp.dto.response.UserResponse;
 import com.group.libraryapp.dto.user.request.UserCreateRequest;
+import com.group.libraryapp.dto.user.request.UserUpdateRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceV2 {
@@ -17,4 +22,15 @@ public class UserServiceV2 {
     public void saveUser(UserCreateRequest request){
         userRepository.save(new User(request.getName(),request.getAge()));
     }
+    public List<UserResponse> getUsers() {
+        return userRepository.findAll().stream().map(UserResponse::new).collect(Collectors.toList());
+    }
+
+    public void updateUser(UserUpdateRequest request){
+        User user = userRepository.findById(request.getId()).orElseThrow(IllegalAccessError::new);
+        user.updateName(request.getName());
+        userRepository.save(user);
+    }
+
+
 }

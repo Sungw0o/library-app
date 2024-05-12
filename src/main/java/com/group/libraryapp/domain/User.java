@@ -26,4 +26,12 @@ public class User {
         this.name = name;
         this.age = age;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void updateName(String name){
+        this.name = name;
+    }
 }
