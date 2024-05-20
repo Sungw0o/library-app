@@ -23,9 +23,7 @@ public class UserController {
 
     @GetMapping("/user")
     public List<UserResponse> getUsers(){
-        return userServiceV2.getUsers();
-
-    }
+        return userServiceV2.getUsers();}
 
     @PutMapping("/user")
     public void updateUser(@RequestBody UserUpdateRequest request){
