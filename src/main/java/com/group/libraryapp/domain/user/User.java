@@ -1,10 +1,14 @@
 package com.group.libraryapp.domain.user;
 
 
+import com.group.libraryapp.domain.loanhistory.UserLoanHistory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -16,6 +20,9 @@ public class User {
     @Column(nullable = false, length = 20, name = "name")
     private String name;
     private Integer age;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserLoanHistory> userLoanHistories = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -40,6 +47,18 @@ public class User {
 
     public void updateName(String name) {
         this.name = name;
+    }
+
+    public void loanBook(String bookName){
+        this.userLoanHistories.add(new UserLoanHistory(this, bookName));
+    }
+
+    public void returnBook(String bookName){
+        UserLoanHistory targerHistory = this.userLoanHistories.stream()
+                .filter(history -> history.getBookName().equals(bookName))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+        targerHistory.doReturn();
     }
 
 
