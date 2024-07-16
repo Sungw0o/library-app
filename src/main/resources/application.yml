@@ -12,3 +12,27 @@ spring:
       show_sql: true #JPA를 사용해 DB에 SQL을 날릴 때 SQL을 보여줄지 결정 함
       format_sql: true #SQL을 예쁘게 포멧팅 여부를 결정
       dialect: org.hibernate.dialect.MySQL8Dialect # JPA가 알아서 DB끼리 다른 SQL을 조금씩 수정해준다.
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: "jdbc:h2:mem:library;MODE=MYSQL;NON_KEYWORDS=USER"
+    username: "sa"
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+    open-in-view: false
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
