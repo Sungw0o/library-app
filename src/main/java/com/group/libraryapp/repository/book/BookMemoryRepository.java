@@ -1,17 +1,13 @@
 package com.group.libraryapp.repository.book;
 
+import com.group.libraryapp.domain.book.BookRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
 @Primary
 @Repository
-public class BookMemoryRepository implements BookRepository {
+public class BookMemoryRepository  {
 
     //private final List<String> books = new ArrayList<>();
 
-    public void saveBook(){
-        System.out.println("MemoryRepository");
-    }
 }
